@@ -40,7 +40,7 @@ export default function About() {
         </div>
 
         {/* Bento grid — 4 cards (asymmetric) */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-6 max-w-5xl mx-auto">
           {/* Card 1 — Image (smaller, premium hover) */}
           <ImageCard />
 
@@ -339,7 +339,7 @@ function ImageCard() {
           </h3>
           <p className="text-xs text-white/85 leading-relaxed mt-2 max-h-0 opacity-0 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500 overflow-hidden">
             Full-stack developer · UI/UX engineer · AI tinkerer based in
-            Karachi.
+            jammu & kashmir.
           </p>
         </div>
       </div>
