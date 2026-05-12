@@ -50,7 +50,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo — monogram + wordmark */}
           <Link href="#home" className="flex items-center gap-2.5 group">
-            <div className="relative w-10 h-10 rounded-xl bg-linear-to-br from-[#4F46E5] to-[#7C3AED] flex items-center justify-center shadow-[0_4px_14px_rgba(79,70,229,0.35)] group-hover:shadow-[0_6px_22px_rgba(79,70,229,0.5)] group-hover:scale-105 transition-all duration-300 overflow-hidden">
+            <div className="relative w-10 h-10 rounded-xl bg-linear-to-br from-[#D1701F] to-[#000000] flex items-center justify-center shadow-[0_4px_14px_rgba(209,112,31,0.35)] group-hover:shadow-[0_6px_22px_rgba(209,112,31,0.5)] group-hover:scale-105 transition-all duration-300 overflow-hidden">
               {/* subtle inner highlight */}
               <span className="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-white/20 to-transparent" />
               <span className="relative text-white font-bold text-lg leading-none tracking-tight">
@@ -61,7 +61,7 @@ export default function Header() {
             </div>
             <div className="flex flex-col leading-none gap-1">
               <span className="text-[15px] font-bold text-gray-900 tracking-tight">
-                Wasim<span className="text-[#4F46E5]">.</span>
+                Wasim<span className="text-[#D1701F]">.</span>
               </span>
               <span className="text-[9px] font-semibold text-gray-500 tracking-[0.25em] uppercase">
                 Developer
@@ -80,12 +80,12 @@ export default function Header() {
                   href={link.href}
                   className={`relative px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${
                     isActive
-                      ? "text-[#4F46E5]"
-                      : "text-gray-600 hover:text-[#4F46E5]"
+                      ? "text-[#D1701F]"
+                      : "text-gray-600 hover:text-[#D1701F]"
                   }`}
                 >
                   {isActive && (
-                    <span className="absolute inset-0 bg-[#4F46E5]/10 rounded-full z-0"></span>
+                    <span className="absolute inset-0 bg-[#D1701F]/10 rounded-full z-0"></span>
                   )}
                   <span className="relative z-10">{link.label}</span>
                 </Link>
@@ -95,11 +95,11 @@ export default function Header() {
 
           {/* CTA Button — Hire Me */}
           <Link href="#contact" className="hidden md:block group">
-            <button className="relative overflow-hidden bg-linear-to-br from-[#4F46E5] to-[#7C3AED] text-white font-semibold text-sm rounded-full pl-5 pr-2 py-2 flex items-center gap-3 shadow-[0_4px_14px_rgba(79,70,229,0.35)] hover:shadow-[0_8px_24px_rgba(79,70,229,0.5)] hover:scale-[1.03] transition-all duration-300">
+            <button className="relative overflow-hidden bg-linear-to-br from-[#D1701F] to-[#000000] text-white font-semibold text-sm rounded-full pl-5 pr-2 py-2 flex items-center gap-3 shadow-[0_4px_14px_rgba(209,112,31,0.35)] hover:shadow-[0_8px_24px_rgba(209,112,31,0.5)] hover:scale-[1.03] transition-all duration-300">
               {/* Shimmer overlay */}
               <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               <span className="relative z-10">Hire Me</span>
-              <span className="relative z-10 w-7 h-7 rounded-full bg-white/95 flex items-center justify-center text-[#4F46E5] group-hover:-rotate-45 transition-transform duration-300">
+              <span className="relative z-10 w-7 h-7 rounded-full bg-white/95 flex items-center justify-center text-[#D1701F] group-hover:-rotate-45 transition-transform duration-300">
                 <svg
                   className="w-3.5 h-3.5"
                   fill="none"
@@ -158,8 +158,8 @@ export default function Header() {
                   onClick={() => setIsMobileOpen(false)}
                   className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition-all duration-300 ${
                     isActive
-                      ? "bg-[#4F46E5]/10 text-[#4F46E5]"
-                      : "text-gray-600 hover:bg-[#4F46E5]/10 hover:text-[#4F46E5] hover:translate-x-1"
+                      ? "bg-[#D1701F]/10 text-[#D1701F]"
+                      : "text-gray-600 hover:bg-[#D1701F]/10 hover:text-[#D1701F] hover:translate-x-1"
                   }`}
                 >
                   {link.label}
@@ -167,7 +167,7 @@ export default function Header() {
               );
             })}
             <Link href="#contact" onClick={() => setIsMobileOpen(false)}>
-              <Button className="w-full bg-linear-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-95 text-white font-semibold rounded-xl mt-2 shadow-[0_4px_14px_rgba(79,70,229,0.35)] hover:scale-[1.02] transition-all duration-300">
+              <Button className="w-full bg-linear-to-br from-[#D1701F] to-[#000000] hover:opacity-95 text-white font-semibold rounded-xl mt-2 shadow-[0_4px_14px_rgba(209,112,31,0.35)] hover:scale-[1.02] transition-all duration-300">
                 Hire Me
               </Button>
             </Link>

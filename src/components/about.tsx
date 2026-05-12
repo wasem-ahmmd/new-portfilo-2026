@@ -9,25 +9,25 @@ export default function About() {
       className="relative py-24 md:py-32 bg-white overflow-hidden"
     >
       {/* Soft brand glow background */}
-      <div className="absolute top-1/3 -left-32 w-96 h-96 bg-[#4F46E5]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 -right-32 w-96 h-96 bg-[#7C3AED]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 -left-32 w-96 h-96 bg-[#D1701F]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 -right-32 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container relative mx-auto px-6">
         {/* Section header */}
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#4F46E5]/10 border border-[#4F46E5]/20 text-[#4F46E5] text-[11px] font-semibold tracking-[0.2em] uppercase mb-5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4F46E5]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#D1701F]/10 border border-[#D1701F]/20 text-[#D1701F] text-[11px] font-semibold tracking-[0.2em] uppercase mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D1701F]" />
             About Me
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.05] mb-5">
             Code with{" "}
-            <span className="bg-linear-to-r from-[#4F46E5] to-[#7C3AED] bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-[#D1701F] to-[#000000] bg-clip-text text-transparent">
               purpose
             </span>
             ,
             <br />
             design with{" "}
-            <span className="bg-linear-to-r from-[#4F46E5] to-[#7C3AED] bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-[#D1701F] to-[#000000] bg-clip-text text-transparent">
               soul
             </span>
             .
@@ -47,9 +47,9 @@ export default function About() {
           {/* Card 2 — My Story (with terminal + CV button) */}
           <Card className="md:col-span-3 p-8 md:p-9 flex flex-col">
             <div className="flex items-center gap-2 mb-5">
-              <span className="w-8 h-8 rounded-lg bg-[#4F46E5]/10 flex items-center justify-center">
+              <span className="w-8 h-8 rounded-lg bg-[#D1701F]/10 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-[#4F46E5]"
+                  className="w-4 h-4 text-[#D1701F]"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={2.2}
@@ -85,29 +85,29 @@ export default function About() {
             {/* Mini terminal */}
             <div className="rounded-xl bg-gray-950 border border-gray-800 overflow-hidden font-mono text-[12px] shadow-[0_8px_30px_rgba(0,0,0,0.12)] mb-6">
               <div className="flex items-center gap-1.5 px-3 py-2 bg-gray-900 border-b border-gray-800">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D1701F]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D1701F]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D1701F]" />
                 <span className="ml-2 text-[10px] text-gray-500 tracking-wider">
                   ~/wasim
                 </span>
               </div>
               <div className="px-4 py-3 space-y-1.5 leading-relaxed">
                 <div>
-                  <span className="text-emerald-400">$</span>{" "}
+                  <span className="text-[#D1701F]">$</span>{" "}
                   <span className="text-gray-300">whoami</span>
                 </div>
                 <div className="text-gray-400">
                   → Wasim Ahmed —{" "}
-                  <span className="text-[#A78BFA]">full-stack engineer</span>
+                  <span className="text-[#D1701F]">full-stack engineer</span>
                 </div>
                 <div>
-                  <span className="text-emerald-400">$</span>{" "}
+                  <span className="text-[#D1701F]">$</span>{" "}
                   <span className="text-gray-300">status</span>
                 </div>
-                <div className="text-emerald-400 flex items-center gap-1.5">
+                <div className="text-[#D1701F] flex items-center gap-1.5">
                   → available for hire
-                  <span className="inline-block w-1.5 h-3 bg-emerald-400 animate-pulse" />
+                  <span className="inline-block w-1.5 h-3 bg-[#D1701F] animate-pulse" />
                 </div>
               </div>
             </div>
@@ -116,7 +116,7 @@ export default function About() {
             <a
               href="/cv.pdf"
               download
-              className="group/cv mt-auto inline-flex items-center justify-center gap-2.5 bg-linear-to-br from-[#4F46E5] to-[#7C3AED] text-white font-semibold text-sm rounded-full px-6 py-3 shadow-[0_4px_14px_rgba(79,70,229,0.35)] hover:shadow-[0_8px_24px_rgba(79,70,229,0.5)] hover:scale-[1.02] transition-all duration-300"
+              className="group/cv mt-auto inline-flex items-center justify-center gap-2.5 bg-linear-to-br from-[#D1701F] to-[#000000] text-white font-semibold text-sm rounded-full px-6 py-3 shadow-[0_4px_14px_rgba(209,112,31,0.35)] hover:shadow-[0_8px_24px_rgba(209,112,31,0.5)] hover:scale-[1.02] transition-all duration-300"
             >
               <svg
                 className="w-4 h-4 transition-transform duration-300 group-hover/cv:translate-y-0.5"
@@ -138,9 +138,9 @@ export default function About() {
           {/* Card 3 — Manifesto */}
           <Card className="md:col-span-3 p-7 md:p-8 min-h-[420px] flex flex-col">
             <div className="flex items-center gap-2 mb-5">
-              <span className="w-8 h-8 rounded-lg bg-[#4F46E5]/10 flex items-center justify-center">
+              <span className="w-8 h-8 rounded-lg bg-[#D1701F]/10 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-[#4F46E5]"
+                  className="w-4 h-4 text-[#D1701F]"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={2.2}
@@ -179,7 +179,7 @@ export default function About() {
                   key={p.n}
                   className="group/item flex gap-4 items-start py-2 border-b border-gray-100 last:border-0"
                 >
-                  <span className="text-2xl md:text-3xl font-bold bg-linear-to-br from-[#4F46E5] to-[#7C3AED] bg-clip-text text-transparent tabular-nums leading-none shrink-0 group-hover/item:scale-110 transition-transform duration-300 origin-left">
+                  <span className="text-2xl md:text-3xl font-bold bg-linear-to-br from-[#D1701F] to-[#000000] bg-clip-text text-transparent tabular-nums leading-none shrink-0 group-hover/item:scale-110 transition-transform duration-300 origin-left">
                     {p.n}
                   </span>
                   <div className="flex-1">
@@ -244,7 +244,7 @@ function Card({
         className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            "radial-gradient(400px circle at var(--mx) var(--my), rgba(79, 70, 229, 0.08), transparent 60%)",
+            "radial-gradient(400px circle at var(--mx) var(--my), rgba(209, 112, 31, 0.08), transparent 60%)",
         }}
       />
       <div className="relative h-full">{children}</div>
@@ -290,11 +290,11 @@ function ImageCard() {
       style={{ perspective: "900px" }}
     >
       {/* Offset gradient shadow behind card */}
-      <div className="absolute inset-0 translate-x-2 translate-y-2 rounded-2xl bg-linear-to-br from-[#4F46E5] to-[#7C3AED] opacity-0 group-hover:opacity-90 group-hover:translate-x-3 group-hover:translate-y-3 transition-all duration-500 blur-[2px]" />
+      <div className="absolute inset-0 translate-x-2 translate-y-2 rounded-2xl bg-linear-to-br from-[#D1701F] to-[#000000] opacity-0 group-hover:opacity-90 group-hover:translate-x-3 group-hover:translate-y-3 transition-all duration-500 blur-[2px]" />
 
       <div
         ref={cardRef}
-        className="relative w-full h-full rounded-2xl overflow-hidden border border-gray-200 bg-gray-100 shadow-[0_4px_14px_rgba(0,0,0,0.06)] group-hover:shadow-[0_25px_60px_rgba(79,70,229,0.35)] transition-shadow duration-500 will-change-transform"
+        className="relative w-full h-full rounded-2xl overflow-hidden border border-gray-200 bg-gray-100 shadow-[0_4px_14px_rgba(0,0,0,0.06)] group-hover:shadow-[0_25px_60px_rgba(209,112,31,0.35)] transition-shadow duration-500 will-change-transform"
         style={{ transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)" }}
       >
         {/* Photo */}
@@ -306,7 +306,7 @@ function ImageCard() {
         />
 
         {/* Indigo color tint at rest, fades on hover */}
-        <div className="absolute inset-0 bg-[#4F46E5]/15 mix-blend-color group-hover:opacity-0 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-[#D1701F]/15 mix-blend-color group-hover:opacity-0 transition-opacity duration-500" />
 
         {/* Diagonal shimmer streak that sweeps across on hover */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -319,8 +319,8 @@ function ImageCard() {
         {/* Top-left badge */}
         <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-white text-[9px] font-semibold tracking-[0.2em] uppercase">
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+            <span className="absolute inline-flex h-full w-full rounded-full bg-[#D1701F] opacity-75 animate-ping" />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D1701F]" />
           </span>
           Available
         </div>
@@ -350,11 +350,11 @@ function ImageCard() {
 /* ---------- Tech Orbit — rotating logos around center ---------- */
 function TechOrbit() {
   const tech = [
-    { slug: "react", color: "61DAFB" },
+    { slug: "react", color: "D1701F" },
     { slug: "typescript", color: "3178C6" },
     { slug: "nextdotjs", color: "000000" },
-    { slug: "tailwindcss", color: "06B6D4" },
-    { slug: "nodedotjs", color: "5FA04E" },
+    { slug: "tailwindcss", color: "D1701F" },
+    { slug: "nodedotjs", color: "D1701F" },
     { slug: "figma", color: "F24E1E" },
     { slug: "python", color: "3776AB" },
     { slug: "go", color: "00ADD8" },
@@ -363,13 +363,13 @@ function TechOrbit() {
   return (
     <div className="relative w-[260px] h-[260px] my-2">
       {/* Outer dashed ring */}
-      <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#4F46E5]/25 orbit-rotate" />
+      <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#D1701F]/25 orbit-rotate" />
       {/* Inner ring */}
-      <div className="absolute inset-10 rounded-full border border-dashed border-[#7C3AED]/20 orbit-rotate-reverse" />
+      <div className="absolute inset-10 rounded-full border border-dashed border-[#000000]/20 orbit-rotate-reverse" />
 
       {/* Center — 10+ Years Exp */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-20 h-20 rounded-2xl bg-linear-to-br from-[#4F46E5] to-[#7C3AED] flex flex-col items-center justify-center text-white shadow-[0_8px_24px_rgba(79,70,229,0.4)] z-10">
+        <div className="w-20 h-20 rounded-2xl bg-linear-to-br from-[#D1701F] to-[#000000] flex flex-col items-center justify-center text-white shadow-[0_8px_24px_rgba(209,112,31,0.4)] z-10">
           <div className="text-3xl font-bold leading-none tracking-tight">
             5<span className="text-white/80">+</span>
           </div>

@@ -17,13 +17,13 @@ const SKILLS: SkillItem[] = [
   // Dev stack
   { name: "Next.js", slug: "nextdotjs", color: "000000" },
   { name: "TypeScript", slug: "typescript", color: "3178C6" },
-  { name: "React", slug: "react", color: "61DAFB" },
-  { name: "Node.js", slug: "nodedotjs", color: "5FA04E" },
-  { name: "TailwindCSS", slug: "tailwindcss", color: "06B6D4" },
+  { name: "React", slug: "react", color: "D1701F" },
+  { name: "Node.js", slug: "nodedotjs", color: "D1701F" },
+  { name: "TailwindCSS", slug: "tailwindcss", color: "D1701F" },
   { name: "Figma", slug: "figma", color: "F24E1E" },
   { name: "Go", slug: "go", color: "00ADD8" },
   { name: "Python", slug: "python", color: "3776AB" },
-  { name: "React Native", slug: "react", color: "61DAFB" },
+  { name: "React Native", slug: "react", color: "D1701F" },
   { name: "Expo", slug: "expo", color: "000020" },
   // AI / Services
   { name: "AI Marketing", emoji: "🤖" },
@@ -58,7 +58,7 @@ export default function Hero() {
       const rect = section.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      spotlight.style.background = `radial-gradient(circle 400px at ${x}px ${y}px, rgba(79, 70, 229, 0.08), transparent 70%)`;
+      spotlight.style.background = `radial-gradient(circle 400px at ${x}px ${y}px, rgba(209, 112, 31, 0.08), transparent 70%)`;
     };
     section.addEventListener("mousemove", onMove);
     return () => section.removeEventListener("mousemove", onMove);
@@ -134,12 +134,12 @@ export default function Hero() {
           <div className="lg:col-span-7 text-center lg:text-left">
             {/* Status pill */}
             <div
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4F46E5]/10 border border-[#4F46E5]/20 text-[#4F46E5] text-[11px] font-semibold mb-6 shadow-sm hero-fade-in"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D1701F]/10 border border-[#D1701F]/20 text-[#D1701F] text-[11px] font-semibold mb-6 shadow-sm hero-fade-in"
               style={{ animationDelay: "0.1s" }}
             >
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-[#4F46E5] opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4F46E5]" />
+                <span className="absolute inline-flex h-full w-full rounded-full bg-[#D1701F] opacity-75 animate-ping" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D1701F]" />
               </span>
               <span className="tracking-wider">AVAILABLE FOR NEW PROJECTS</span>
             </div>
@@ -151,11 +151,11 @@ export default function Hero() {
             >
               Crafting{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 bg-linear-to-r from-[#4F46E5] via-[#7C3AED] to-[#4F46E5] bg-clip-text text-transparent bg-size-[200%_100%] animate-shimmer">
+                <span className="relative z-10 bg-linear-to-r from-[#D1701F] via-[#000000] to-[#D1701F] bg-clip-text text-transparent bg-size-[200%_100%] animate-shimmer">
                   digital products
                 </span>
                 <span
-                  className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-[#4F46E5]/15 z-0"
+                  className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-[#D1701F]/15 z-0"
                   style={{ transform: "skewX(-8deg)" }}
                 />
               </span>
@@ -170,15 +170,15 @@ export default function Hero() {
               I&apos;m{" "}
               <span className="font-semibold text-gray-900">Waseem Ahmed</span>{" "}
              {" "}
-              <span className="font-semibold bg-linear-to-r from-[#4F46E5] to-[#7C3AED] bg-clip-text text-transparent ">
+              <span className="font-semibold bg-linear-to-r from-[#D1701F] to-[#000000] bg-clip-text text-transparent ">
                 {" "}
                 Founder of Eznah AI & Dev{" "}
               </span>  — A{" "}
-              <span className="font-mono font-semibold text-[#4F46E5] inline-flex items-center">
-                <span className="text-[#4F46E5]/50">{"<"}</span>
+              <span className="font-mono font-semibold text-[#D1701F] inline-flex items-center">
+                <span className="text-[#D1701F]/50">{"<"}</span>
                 {displayed || "\u00A0"}
-                <span className="inline-block w-[2px] h-4 md:h-5 bg-[#4F46E5] align-middle mx-0.5 animate-pulse" />
-                <span className="text-[#4F46E5]/50">{"/>"}</span>
+                <span className="inline-block w-[2px] h-4 md:h-5 bg-[#D1701F] align-middle mx-0.5 animate-pulse" />
+                <span className="text-[#D1701F]/50">{"/>"}</span>
               </span>{" "}
               turning ideas into clean, modern experiences.
             </p>
@@ -400,10 +400,10 @@ function ProfileImage() {
       style={{ transformStyle: "preserve-3d" }}
     >
       {/* Indigo glow halo — intensifies on hover */}
-      <div className="absolute inset-0 rounded-full bg-[#4F46E5]/30 blur-3xl animate-glow-pulse -z-20 group-hover:bg-[#4F46E5]/50 transition-colors duration-700" />
+      <div className="absolute inset-0 rounded-full bg-[#D1701F]/30 blur-3xl animate-glow-pulse -z-20 group-hover:bg-[#D1701F]/50 transition-colors duration-700" />
 
       {/* Background offset square — indigo gradient, reveals on tilt */}
-      <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-3xl bg-linear-to-br from-[#4F46E5] to-[#7C3AED] opacity-90 -z-10 group-hover:translate-x-5 group-hover:translate-y-5 transition-transform duration-500" />
+      <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-3xl bg-linear-to-br from-[#D1701F] to-[#000000] opacity-90 -z-10 group-hover:translate-x-5 group-hover:translate-y-5 transition-transform duration-500" />
 
       {/* Main image card with 3D tilt */}
       <div
@@ -454,7 +454,7 @@ function ProfileImage() {
 
 function SkillPill({ skill }: { skill: SkillItem }) {
   return (
-    <div className="group flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full whitespace-nowrap shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:border-[#4F46E5] hover:shadow-[0_4px_14px_rgba(79,70,229,0.18)] hover:-translate-y-0.5 transition-all duration-300">
+    <div className="group flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full whitespace-nowrap shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:border-[#D1701F] hover:shadow-[0_4px_14px_rgba(209,112,31,0.18)] hover:-translate-y-0.5 transition-all duration-300">
       {skill.slug ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -466,7 +466,7 @@ function SkillPill({ skill }: { skill: SkillItem }) {
       ) : (
         <span className="text-base leading-none">{skill.emoji}</span>
       )}
-      <span className="text-xs font-semibold text-gray-700 group-hover:text-[#4F46E5] transition-colors">
+      <span className="text-xs font-semibold text-gray-700 group-hover:text-[#D1701F] transition-colors">
         {skill.name}
       </span>
     </div>
@@ -531,7 +531,7 @@ function Stat({ number, label }: { number: string; label: string }) {
     <div className="text-center lg:text-left">
       <div className="text-2xl md:text-4xl font-bold text-gray-900 tracking-tight tabular-nums">
         {count}
-        <span className="text-[#4F46E5]">{suffix}</span>
+        <span className="text-[#D1701F]">{suffix}</span>
       </div>
       <div className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-gray-500 mt-1">
         {label}

@@ -54,8 +54,8 @@
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   /* Brand accent (Indigo-600) */
-  --brand: #4F46E5;
-  --brand-soft: #EEF2FF;
+  --brand: #D1701F;
+  --brand-soft: #FEF2E8;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -143,7 +143,7 @@
     letter-spacing: -0.045em;
   }
   ::selection {
-    background-color: #4F46E5;
+    background-color: #D1701F;
     color: #ffffff;
   }
 }

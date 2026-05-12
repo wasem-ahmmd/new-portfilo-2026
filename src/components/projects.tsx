@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -50,12 +50,12 @@ const SERVICES: {
   accent: string;
 }[] = [
   { key: "all", label: "All Work", short: "All", icon: "✨", accent: "from-gray-700 to-gray-900" },
-  { key: "web", label: "Web Development", short: "Web", icon: "🌐", accent: "from-indigo-500 to-violet-600" },
-  { key: "ai", label: "AI Tools", short: "AI", icon: "🤖", accent: "from-violet-500 to-fuchsia-500" },
-  { key: "app", label: "App Development", short: "Apps", icon: "📱", accent: "from-pink-500 to-rose-500" },
-  { key: "marketing", label: "Digital Marketing", short: "Marketing", icon: "📈", accent: "from-amber-500 to-orange-500" },
-  { key: "computer-training", label: "Computer Training", short: "Computer", icon: "💻", accent: "from-sky-500 to-blue-600" },
-  { key: "coding-training", label: "Coding Training", short: "Coding", icon: "👨‍💻", accent: "from-emerald-500 to-teal-600" },
+  { key: "web", label: "Web Development", short: "Web", icon: "🌐", accent: "from-[#D1701F] to-[#000000]" },
+  { key: "ai", label: "AI Tools", short: "AI", icon: "🤖", accent: "from-[#000000] to-[#D1701F]" },
+  { key: "app", label: "App Development", short: "Apps", icon: "📱", accent: "from-[#D1701F] to-[#000000]" },
+  { key: "marketing", label: "Digital Marketing", short: "Marketing", icon: "📈", accent: "from-[#D1701F] to-[#D1701F]" },
+  { key: "computer-training", label: "Computer Training", short: "Computer", icon: "💻", accent: "from-[#000000] to-[#000000]" },
+  { key: "coding-training", label: "Coding Training", short: "Coding", icon: "👨‍💻", accent: "from-[#D1701F] to-[#000000]" },
 ];
 
 /* All projects across services */
@@ -79,10 +79,10 @@ const ALL_PROJECTS: Project[] = [
     tech: [
       { slug: "nextdotjs", color: "000000", name: "Next.js" },
       { slug: "typescript", color: "3178C6", name: "TS" },
-      { slug: "postgresql", color: "4169E1", name: "Postgres" },
-      { slug: "tailwindcss", color: "06B6D4", name: "Tailwind" },
+      { slug: "postgresql", color: "D1701F", name: "Postgres" },
+      { slug: "tailwindcss", color: "D1701F", name: "Tailwind" },
     ],
-    accent: "from-indigo-500 via-violet-500 to-fuchsia-500",
+    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
     href: "#",
     mockType: "dashboard",
     media: {
@@ -108,10 +108,10 @@ const ALL_PROJECTS: Project[] = [
     ],
     tech: [
       { slug: "nextdotjs", color: "000000", name: "Next.js" },
-      { slug: "stripe", color: "635BFF", name: "Stripe" },
-      { slug: "sanity", color: "F03E2F", name: "Sanity" },
+      { slug: "stripe", color: "D1701F", name: "Stripe" },
+      { slug: "sanity", color: "D1701F", name: "Sanity" },
     ],
-    accent: "from-amber-400 via-orange-500 to-rose-500",
+    accent: "from-[#D1701F] via-[#D1701F] to-[#000000]",
     href: "#",
     mockType: "ecommerce",
     media: {
@@ -138,10 +138,10 @@ const ALL_PROJECTS: Project[] = [
     ],
     tech: [
       { slug: "openai", color: "412991", name: "OpenAI" },
-      { slug: "langchain", color: "1C3C3C", name: "LangChain" },
+      { slug: "langchain", color: "000000", name: "LangChain" },
       { slug: "nextdotjs", color: "000000", name: "Next.js" },
     ],
-    accent: "from-violet-500 via-purple-500 to-fuchsia-500",
+    accent: "from-[#000000] via-[#000000] to-[#D1701F]",
     href: "#",
     mockType: "ai",
     media: {
@@ -167,9 +167,9 @@ const ALL_PROJECTS: Project[] = [
     tech: [
       { slug: "openai", color: "412991", name: "OpenAI" },
       { slug: "pinecone", color: "000000", name: "Pinecone" },
-      { slug: "react", color: "61DAFB", name: "React" },
+      { slug: "react", color: "D1701F", name: "React" },
     ],
-    accent: "from-cyan-500 via-blue-500 to-indigo-600",
+    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
     href: "#",
     mockType: "ai",
     media: {
@@ -197,10 +197,10 @@ const ALL_PROJECTS: Project[] = [
     ],
     tech: [
       { slug: "expo", color: "000020", name: "Expo" },
-      { slug: "react", color: "61DAFB", name: "RN" },
-      { slug: "supabase", color: "3FCF8E", name: "Supabase" },
+      { slug: "react", color: "D1701F", name: "RN" },
+      { slug: "supabase", color: "D1701F", name: "Supabase" },
     ],
-    accent: "from-pink-500 via-rose-500 to-red-500",
+    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
     href: "#",
     mockType: "mobile",
     media: {
@@ -225,10 +225,10 @@ const ALL_PROJECTS: Project[] = [
     ],
     tech: [
       { slug: "flutter", color: "02569B", name: "Flutter" },
-      { slug: "firebase", color: "DD2C00", name: "Firebase" },
-      { slug: "googlemaps", color: "4285F4", name: "Maps" },
+      { slug: "firebase", color: "D1701F", name: "Firebase" },
+      { slug: "googlemaps", color: "000000", name: "Maps" },
     ],
-    accent: "from-orange-500 via-red-500 to-pink-500",
+    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
     href: "#",
     mockType: "mobile",
     media: {
@@ -256,10 +256,10 @@ const ALL_PROJECTS: Project[] = [
     ],
     tech: [
       { slug: "meta", color: "0467DF", name: "Meta Ads" },
-      { slug: "googleads", color: "4285F4", name: "Google Ads" },
-      { slug: "googleanalytics", color: "E37400", name: "GA4" },
+      { slug: "googleads", color: "000000", name: "Google Ads" },
+      { slug: "googleanalytics", color: "D1701F", name: "GA4" },
     ],
-    accent: "from-amber-400 via-orange-500 to-red-500",
+    accent: "from-[#D1701F] via-[#D1701F] to-[#D1701F]",
     href: "#",
     mockType: "marketing",
     media: {
@@ -284,10 +284,10 @@ const ALL_PROJECTS: Project[] = [
     ],
     tech: [
       { slug: "googlesearchconsole", color: "458CF5", name: "GSC" },
-      { slug: "ahrefs", color: "0166FF", name: "Ahrefs" },
-      { slug: "semrush", color: "FF642D", name: "SEMrush" },
+      { slug: "ahrefs", color: "000000", name: "Ahrefs" },
+      { slug: "semrush", color: "D1701F", name: "SEMrush" },
     ],
-    accent: "from-yellow-400 via-amber-500 to-orange-500",
+    accent: "from-[#D1701F] via-[#D1701F] to-[#D1701F]",
     href: "#",
     mockType: "marketing",
     media: {
@@ -314,10 +314,10 @@ const ALL_PROJECTS: Project[] = [
     ],
     tech: [
       { slug: "microsoftexcel", color: "217346", name: "Excel" },
-      { slug: "microsoftword", color: "2B579A", name: "Word" },
-      { slug: "microsoftpowerpoint", color: "B7472A", name: "PPT" },
+      { slug: "microsoftword", color: "000000", name: "Word" },
+      { slug: "microsoftpowerpoint", color: "D1701F", name: "PPT" },
     ],
-    accent: "from-sky-400 via-blue-500 to-indigo-600",
+    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
     href: "#",
     mockType: "training",
     media: {
@@ -345,11 +345,11 @@ const ALL_PROJECTS: Project[] = [
     ],
     tech: [
       { slug: "javascript", color: "F7DF1E", name: "JS" },
-      { slug: "react", color: "61DAFB", name: "React" },
-      { slug: "nodedotjs", color: "5FA04E", name: "Node" },
-      { slug: "git", color: "F05032", name: "Git" },
+      { slug: "react", color: "D1701F", name: "React" },
+      { slug: "nodedotjs", color: "D1701F", name: "Node" },
+      { slug: "git", color: "D1701F", name: "Git" },
     ],
-    accent: "from-emerald-500 via-teal-500 to-cyan-500",
+    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
     href: "#",
     mockType: "course",
     media: {
@@ -404,11 +404,11 @@ export default function Projects() {
             <h2 className="md:col-span-8 text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.05] tracking-tight">
               Work across{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 bg-linear-to-r from-[#4F46E5] via-[#7C3AED] to-[#4F46E5] bg-clip-text text-transparent bg-size-[200%_100%] animate-shimmer">
+                <span className="relative z-10 bg-linear-to-r from-[#D1701F] via-[#000000] to-[#D1701F] bg-clip-text text-transparent bg-size-[200%_100%] animate-shimmer">
                   six disciplines
                 </span>
                 <span
-                  className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-[#4F46E5]/15 z-0"
+                  className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-[#D1701F]/15 z-0"
                   style={{ transform: "skewX(-8deg)" }}
                 />
               </span>
@@ -591,89 +591,32 @@ function CompactCard({ project, index }: { project: Project; index: number }) {
   const serviceMeta =
     SERVICES.find((s) => s.key === project.service) ?? SERVICES[0];
 
-  useEffect(() => {
-    const wrap = wrapRef.current;
-    const card = cardRef.current;
-    const img = imgRef.current;
-    const vid = videoRef.current;
-    if (!wrap || !card) return;
-
-    const onMove = (e: MouseEvent) => {
-      const rect = wrap.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      // Cursor coords for spotlight (in px)
-      card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-      card.style.setProperty("--my", `${e.clientY - rect.top}px`);
-      // 3D tilt: -1..1 range → rotate -7°..7°
-      const rx = (0.5 - y) * 8;
-      const ry = (x - 0.5) * 10;
-      card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
-      // Image parallax — opposite direction, subtle
-      const dx = (x - 0.5) * -16;
-      const dy = (y - 0.5) * -16;
-      if (img) img.style.transform = `scale(1.12) translate(${dx}px, ${dy}px)`;
-      if (vid) vid.style.transform = `scale(1.06) translate(${dx * 0.6}px, ${dy * 0.6}px)`;
-    };
-    const onLeave = () => {
-      card.style.transform =
-        "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)";
-      if (img) img.style.transform = "scale(1) translate(0,0)";
-      if (vid) vid.style.transform = "scale(1) translate(0,0)";
-    };
-
-    wrap.addEventListener("mousemove", onMove);
-    wrap.addEventListener("mouseleave", onLeave);
-    return () => {
-      wrap.removeEventListener("mousemove", onMove);
-      wrap.removeEventListener("mouseleave", onLeave);
-    };
-  }, []);
-
   return (
-    <div ref={wrapRef} className="relative" style={{ perspective: "1000px" }}>
-      {/* Animated rainbow gradient border — visible on hover */}
+    <div ref={wrapRef} className="relative">
+      {/* Running border — bright segment travels around the card on hover */}
       <div
         aria-hidden
-        className={`absolute inset-[-2px] rounded-2xl transition-opacity duration-500 pointer-events-none ${
+        className={`absolute inset-[-2px] rounded-2xl pointer-events-none transition-opacity duration-300 overflow-hidden ${
           hovered ? "opacity-100" : "opacity-0"
         }`}
-        style={{
-          background:
-            "conic-gradient(from var(--angle, 0deg), #4F46E5, #7C3AED, #EC4899, #F59E0B, #10B981, #06B6D4, #4F46E5)",
-          animation: hovered ? "spin-slow 4s linear infinite" : undefined,
-          filter: "blur(0.5px)",
-        }}
-      />
+      >
+        <div
+          className="absolute inset-[-50%]"
+          style={{
+            background:
+              "conic-gradient(from 0deg, transparent 0deg, transparent 260deg, #D1701F 310deg, #000000 350deg, transparent 360deg)",
+            animation: hovered ? "border-run 2.5s linear infinite" : undefined,
+          }}
+        />
+      </div>
 
       <a
         ref={cardRef}
         href={project.href}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="group relative block bg-white rounded-2xl overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(79,70,229,0.18)] transition-all duration-500 will-change-transform"
-        style={{
-          transformStyle: "preserve-3d",
-          transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s",
-        }}
+        className="group relative block bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(209,112,31,0.15)] transition-shadow duration-500"
       >
-        {/* Dark overlay on hover */}
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
-          style={{
-            background: "rgba(0, 0, 0, 0.02)",
-          }}
-        />
-        {/* Cursor-tracked indigo spotlight on whole card */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-5"
-          style={{
-            background:
-              "radial-gradient(400px circle at var(--mx) var(--my), rgba(79, 70, 229, 0.15), transparent 70%)",
-          }}
-        />
 
       {/* === Media area === */}
       <div className="relative aspect-4/3 bg-gray-100 overflow-hidden">
@@ -733,7 +676,7 @@ function CompactCard({ project, index }: { project: Project; index: number }) {
         {/* Indigo accent corner — animates in on hover */}
         <div
           aria-hidden
-          className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-linear-to-br from-[#4F46E5] to-[#7C3AED] blur-2xl transition-all duration-700 ${
+          className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-linear-to-br from-[#D1701F] to-[#000000] blur-2xl transition-all duration-700 ${
             hovered ? "opacity-70 scale-100" : "opacity-0 scale-75"
           }`}
         />
@@ -752,8 +695,8 @@ function CompactCard({ project, index }: { project: Project; index: number }) {
           {project.media.type === "video" ? (
             <>
               <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
+                <span className="absolute inline-flex h-full w-full rounded-full bg-[#D1701F] opacity-75 animate-ping" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D1701F]" />
               </span>
               Video
             </>
@@ -788,7 +731,7 @@ function CompactCard({ project, index }: { project: Project; index: number }) {
             className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-1.5"
             style={{
               textShadow: hovered
-                ? "2px 2px 0 rgba(124, 58, 237, 0.6), -2px -2px 0 rgba(6, 182, 212, 0.4), 0 2px 8px rgba(0,0,0,0.4)"
+                ? "2px 2px 0 rgba(0, 0, 0, 0.6), -2px -2px 0 rgba(6, 182, 212, 0.4), 0 2px 8px rgba(0,0,0,0.4)"
                 : "0 1px 3px rgba(0,0,0,0.4)",
               transition: "text-shadow 0.5s",
             }}
@@ -828,9 +771,9 @@ function CompactCard({ project, index }: { project: Project; index: number }) {
       </div>
       </a>
 
-      {/* Keyframe for animated border */}
+      {/* Keyframe for running border */}
       <style jsx>{`
-        @keyframes spin-slow {
+        @keyframes border-run {
           from {
             transform: rotate(0deg);
           }
