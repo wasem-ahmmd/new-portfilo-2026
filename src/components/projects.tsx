@@ -1,760 +1,243 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-type Tech = { slug: string; color: string; name: string };
-
-type ServiceKey =
-  | "web"
-  | "ai"
-  | "app"
-  | "marketing"
-  | "computer-training"
-  | "coding-training";
-
-type Project = {
-  num: string;
-  title: string;
-  tagline: string;
-  service: ServiceKey;
-  category: string;
-  year: string;
-  role: string;
-  description: string;
-  metrics: { value: string; label: string }[];
-  tech: Tech[];
-  accent: string;
-  href: string;
-  mockType:
-    | "dashboard"
-    | "ecommerce"
-    | "chat"
-    | "mobile"
-    | "ai"
-    | "marketing"
-    | "course"
-    | "training";
-  media: {
-    type: "image" | "video";
-    src: string; // image URL or video poster URL
-    videoSrc?: string; // optional video file URL
-  };
-};
-
-/* Service categories for filter tabs */
-const SERVICES: {
-  key: ServiceKey | "all";
-  label: string;
-  short: string;
-  icon: string;
-  accent: string;
-}[] = [
-  { key: "all", label: "All Work", short: "All", icon: "✨", accent: "from-gray-700 to-gray-900" },
-  { key: "web", label: "Web Development", short: "Web", icon: "🌐", accent: "from-[#D1701F] to-[#000000]" },
-  { key: "ai", label: "AI Tools", short: "AI", icon: "🤖", accent: "from-[#000000] to-[#D1701F]" },
-  { key: "app", label: "App Development", short: "Apps", icon: "📱", accent: "from-[#D1701F] to-[#000000]" },
-  { key: "marketing", label: "Digital Marketing", short: "Marketing", icon: "📈", accent: "from-[#D1701F] to-[#D1701F]" },
-  { key: "computer-training", label: "Computer Training", short: "Computer", icon: "💻", accent: "from-[#000000] to-[#000000]" },
-  { key: "coding-training", label: "Coding Training", short: "Coding", icon: "👨‍💻", accent: "from-[#D1701F] to-[#000000]" },
-];
-
-/* All projects across services */
-const ALL_PROJECTS: Project[] = [
-  // ——— WEB DEVELOPMENT ————
+const PROCESS = [
   {
-    num: "01",
-    title: "Nexus AI Dashboard",
-    tagline: "Mission control for AI agents",
-    service: "web",
-    category: "SaaS Platform",
-    year: "2025",
-    role: "Full-stack + Design",
-    description:
-      "A production-grade dashboard to deploy, monitor, and orchestrate AI agents — with a command palette and real-time logs.",
-    metrics: [
-      { value: "240+", label: "Users" },
-      { value: "$8K", label: "MRR" },
-      { value: "99.9%", label: "Uptime" },
-    ],
-    tech: [
-      { slug: "nextdotjs", color: "000000", name: "Next.js" },
-      { slug: "typescript", color: "3178C6", name: "TS" },
-      { slug: "postgresql", color: "D1701F", name: "Postgres" },
-      { slug: "tailwindcss", color: "D1701F", name: "Tailwind" },
-    ],
-    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
-    href: "#",
-    mockType: "dashboard",
-    media: {
-      type: "video",
-      src: "https://picsum.photos/seed/nexus-ai/800/500",
-      videoSrc: "https://cdn.pixabay.com/video/2023/03/15/154013-808609772_large.mp4",
-    },
+    step: "01",
+    title: "Discover",
+    desc: "We talk about your goals, audience and constraints.",
   },
   {
-    num: "02",
-    title: "Lumen Commerce",
-    tagline: "Headless storefront, frictionless checkout",
-    service: "web",
-    category: "E-commerce",
-    year: "2025",
-    role: "Lead Engineer",
-    description:
-      "Headless storefront with one-click Stripe checkout and AI-powered product recommendations.",
-    metrics: [
-      { value: "+38%", label: "Conversion" },
-      { value: "1.8s", label: "TTI" },
-      { value: "5★", label: "Client" },
-    ],
-    tech: [
-      { slug: "nextdotjs", color: "000000", name: "Next.js" },
-      { slug: "stripe", color: "D1701F", name: "Stripe" },
-      { slug: "sanity", color: "D1701F", name: "Sanity" },
-    ],
-    accent: "from-[#D1701F] via-[#D1701F] to-[#000000]",
-    href: "#",
-    mockType: "ecommerce",
-    media: {
-      type: "image",
-      src: "https://picsum.photos/seed/lumen-shop/800/500",
-    },
-  },
-
-  // ——— AI TOOLS ————————————————
-  {
-    num: "03",
-    title: "ContentForge AI",
-    tagline: "Generate brand-perfect copy in seconds",
-    service: "ai",
-    category: "AI Writing Tool",
-    year: "2025",
-    role: "AI Engineer + Design",
-    description:
-      "Custom GPT pipeline that turns brand guidelines into on-tone blog posts, ads, and social copy.",
-    metrics: [
-      { value: "50K+", label: "Words/day" },
-      { value: "12×", label: "Faster" },
-      { value: "85%", label: "Approval" },
-    ],
-    tech: [
-      { slug: "openai", color: "412991", name: "OpenAI" },
-      { slug: "langchain", color: "000000", name: "LangChain" },
-      { slug: "nextdotjs", color: "000000", name: "Next.js" },
-    ],
-    accent: "from-[#000000] via-[#000000] to-[#D1701F]",
-    href: "#",
-    mockType: "ai",
-    media: {
-      type: "image",
-      src: "https://picsum.photos/seed/contentforge/800/500",
-    },
+    step: "02",
+    title: "Design",
+    desc: "Wireframes & polished UI — fast, iterative, on Figma.",
   },
   {
-    num: "04",
-    title: "SmartChat Assistant",
-    tagline: "AI customer-support bot, trained on your docs",
-    service: "ai",
-    category: "Chatbot · RAG",
-    year: "2024",
-    role: "AI Engineer",
-    description:
-      "Drop-in chat widget with retrieval-augmented answers from your knowledge base. 24/7 zero-touch support.",
-    metrics: [
-      { value: "92%", label: "Resolved" },
-      { value: "3s", label: "Avg. reply" },
-      { value: "−40%", label: "Tickets" },
-    ],
-    tech: [
-      { slug: "openai", color: "412991", name: "OpenAI" },
-      { slug: "pinecone", color: "000000", name: "Pinecone" },
-      { slug: "react", color: "D1701F", name: "React" },
-    ],
-    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
-    href: "#",
-    mockType: "ai",
-    media: {
-      type: "video",
-      src: "https://picsum.photos/seed/smartchat/800/500",
-      videoSrc: "https://cdn.pixabay.com/video/2024/03/05/202944-919039243_large.mp4",
-    },
-  },
-
-  // ——— APP DEVELOPMENT ———————————————
-  {
-    num: "05",
-    title: "Trail Fitness",
-    tagline: "Your AI fitness companion, offline-first",
-    service: "app",
-    category: "Mobile · React Native",
-    year: "2024",
-    role: "Mobile Engineer",
-    description:
-      "Cross-platform fitness app with offline workouts, GPS tracking, and AI coaching plans.",
-    metrics: [
-      { value: "4.8★", label: "App Store" },
-      { value: "12K+", label: "Downloads" },
-      { value: "Offline", label: "First" },
-    ],
-    tech: [
-      { slug: "expo", color: "000020", name: "Expo" },
-      { slug: "react", color: "D1701F", name: "RN" },
-      { slug: "supabase", color: "D1701F", name: "Supabase" },
-    ],
-    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
-    href: "#",
-    mockType: "mobile",
-    media: {
-      type: "image",
-      src: "https://picsum.photos/seed/trail-fitness/800/500",
-    },
+    step: "03",
+    title: "Build",
+    desc: "Clean, typed, performant code. Deployed to production.",
   },
   {
-    num: "06",
-    title: "FoodieGo",
-    tagline: "Hyper-local food delivery, in 20 minutes",
-    service: "app",
-    category: "Mobile · Marketplace",
-    year: "2024",
-    role: "Full Mobile Stack",
-    description:
-      "End-to-end food delivery app — customer, rider, and merchant flows with live order tracking.",
-    metrics: [
-      { value: "8K+", label: "Orders" },
-      { value: "18min", label: "Avg. ETA" },
-      { value: "4.7★", label: "Rating" },
-    ],
-    tech: [
-      { slug: "flutter", color: "02569B", name: "Flutter" },
-      { slug: "firebase", color: "D1701F", name: "Firebase" },
-      { slug: "googlemaps", color: "000000", name: "Maps" },
-    ],
-    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
-    href: "#",
-    mockType: "mobile",
-    media: {
-      type: "video",
-      src: "https://picsum.photos/seed/foodiego/800/500",
-      videoSrc: "https://cdn.pixabay.com/video/2023/06/14/167221-836738487_large.mp4",
-    },
-  },
-
-  // ——— DIGITAL MARKETING —————————————
-  {
-    num: "07",
-    title: "BrandLift Campaign",
-    tagline: "Multi-channel growth for a fashion DTC brand",
-    service: "marketing",
-    category: "Paid Ads · SEO · Social",
-    year: "2025",
-    role: "Marketing Lead",
-    description:
-      "Full-funnel campaign — Meta & Google ads, SEO content, and influencer activations for a Karachi-based fashion startup.",
-    metrics: [
-      { value: "4.2×", label: "ROAS" },
-      { value: "+185%", label: "Followers" },
-      { value: "−32%", label: "CAC" },
-    ],
-    tech: [
-      { slug: "meta", color: "0467DF", name: "Meta Ads" },
-      { slug: "googleads", color: "000000", name: "Google Ads" },
-      { slug: "googleanalytics", color: "D1701F", name: "GA4" },
-    ],
-    accent: "from-[#D1701F] via-[#D1701F] to-[#D1701F]",
-    href: "#",
-    mockType: "marketing",
-    media: {
-      type: "image",
-      src: "https://picsum.photos/seed/brandlift/800/500",
-    },
-  },
-  {
-    num: "08",
-    title: "Local SEO Boost",
-    tagline: "From page 5 to map pack #1",
-    service: "marketing",
-    category: "SEO · Local Listings",
-    year: "2024",
-    role: "SEO Strategist",
-    description:
-      "Local SEO overhaul for 12 service businesses — citations, GMB optimization, and review automation.",
-    metrics: [
-      { value: "+420%", label: "Calls" },
-      { value: "Top 3", label: "Map Pack" },
-      { value: "12", label: "Clients" },
-    ],
-    tech: [
-      { slug: "googlesearchconsole", color: "458CF5", name: "GSC" },
-      { slug: "ahrefs", color: "000000", name: "Ahrefs" },
-      { slug: "semrush", color: "D1701F", name: "SEMrush" },
-    ],
-    accent: "from-[#D1701F] via-[#D1701F] to-[#D1701F]",
-    href: "#",
-    mockType: "marketing",
-    media: {
-      type: "image",
-      src: "https://picsum.photos/seed/local-seo/800/500",
-    },
-  },
-
-  // ——— COMPUTER TRAINING —————————————
-  {
-    num: "09",
-    title: "Office Mastery Bootcamp",
-    tagline: "From zero to confident in 6 weeks",
-    service: "computer-training",
-    category: "MS Office · Productivity",
-    year: "2025",
-    role: "Lead Trainer",
-    description:
-      "Hands-on Office 365 program — Word, Excel, PowerPoint, Outlook — for working professionals and students.",
-    metrics: [
-      { value: "300+", label: "Graduates" },
-      { value: "98%", label: "Completion" },
-      { value: "4.9★", label: "Rating" },
-    ],
-    tech: [
-      { slug: "microsoftexcel", color: "217346", name: "Excel" },
-      { slug: "microsoftword", color: "000000", name: "Word" },
-      { slug: "microsoftpowerpoint", color: "D1701F", name: "PPT" },
-    ],
-    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
-    href: "#",
-    mockType: "training",
-    media: {
-      type: "video",
-      src: "https://picsum.photos/seed/office-bootcamp/800/500",
-      videoSrc: "https://cdn.pixabay.com/video/2020/03/24/34091-400893872_large.mp4",
-    },
-  },
-
-  // ——— CODING TRAINING ———————————————
-  {
-    num: "10",
-    title: "Web Dev Bootcamp",
-    tagline: "Junior to job-ready in 12 weeks",
-    service: "coding-training",
-    category: "Full-stack · JS",
-    year: "2025",
-    role: "Lead Instructor",
-    description:
-      "Cohort-based program covering HTML, CSS, JS, React & Node — with real client projects and job-placement support.",
-    metrics: [
-      { value: "120+", label: "Students" },
-      { value: "78%", label: "Hired" },
-      { value: "5.0★", label: "Rating" },
-    ],
-    tech: [
-      { slug: "javascript", color: "F7DF1E", name: "JS" },
-      { slug: "react", color: "D1701F", name: "React" },
-      { slug: "nodedotjs", color: "D1701F", name: "Node" },
-      { slug: "git", color: "D1701F", name: "Git" },
-    ],
-    accent: "from-[#D1701F] via-[#000000] to-[#D1701F]",
-    href: "#",
-    mockType: "course",
-    media: {
-      type: "image",
-      src: "https://picsum.photos/seed/web-bootcamp/800/500",
-    },
+    step: "04",
+    title: "Launch",
+    desc: "Ship, measure, iterate. Long-term support if you want it.",
   },
 ];
 
 export default function Projects() {
-  const [activeService, setActiveService] = useState<ServiceKey | "all">("all");
-  const filtered =
-    activeService === "all"
-      ? ALL_PROJECTS
-      : ALL_PROJECTS.filter((p) => p.service === activeService);
-
   return (
     <section
       id="projects"
-      className="relative py-24 md:py-32 bg-[#f7f6f2] overflow-hidden"
+      className="relative py-24 md:py-32 px-4 md:px-8 lg:px-12 bg-white overflow-hidden"
     >
-      {/* Hero-matched background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle at 20% 20%, #ffffff 0%, transparent 55%), radial-gradient(circle at 85% 80%, #efece4 0%, transparent 50%)",
-        }}
-      />
-      <div
-        className="absolute inset-0 opacity-[0.4] pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(#bdbab2 1px, transparent 1px)",
-          backgroundSize: "22px 22px",
-          maskImage:
-            "radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%)",
-        }}
-      />
+      {/* Background accents */}
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#D1701F]/8 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 -right-32 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container relative z-10 mx-auto px-6">
-        {/* Section header — editorial */}
-        <div className="max-w-6xl mx-auto mb-16 md:mb-20">
-          <div className="flex items-center gap-3 mb-5">
-            <span className="w-12 h-px bg-gray-400" />
-            <span className="text-[11px] font-semibold tracking-[0.3em] uppercase text-gray-500">
-              Selected Work · 2024–25
+      <div className="container relative mx-auto px-6">
+        {/* Header — Live Code Lab */}
+        <div className="max-w-2xl mx-auto text-center mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#D1701F]/10 border border-[#D1701F]/20 text-[#D1701F] text-[11px] font-semibold tracking-[0.2em] uppercase mb-5">
+            <span className="relative flex w-1.5 h-1.5">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#D1701F] opacity-75 animate-ping" />
+              <span className="relative inline-flex rounded-full w-1.5 h-1.5 bg-[#D1701F]" />
             </span>
+            Live Code Lab
           </div>
-          <div className="grid md:grid-cols-12 gap-8 items-end">
-            <h2 className="md:col-span-8 text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.05] tracking-tight">
-              Work across{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10 bg-linear-to-r from-[#D1701F] via-[#000000] to-[#D1701F] bg-clip-text text-transparent bg-size-[200%_100%] animate-shimmer">
-                  six disciplines
-                </span>
-                <span
-                  className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-[#D1701F]/15 z-0"
-                  style={{ transform: "skewX(-8deg)" }}
-                />
-              </span>
-              .
-            </h2>
-            <p className="md:col-span-4 text-base text-gray-600 leading-relaxed">
-              Web, AI, apps, marketing & training — pick a category below to see
-              the work that fits your need.
-            </p>
-          </div>
-
-          {/* Subtle stats line — elegant, single row */}
-          <div className="mt-10 flex flex-wrap items-baseline gap-x-10 gap-y-3 text-sm text-gray-500">
-            <span className="flex items-baseline gap-2">
-              <span className="font-mono font-bold text-gray-900 text-base tabular-nums">
-                <CountUp value="30+" />
-              </span>
-              shipped
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.05] mb-5">
+            Don&apos;t take my word &mdash;{" "}
+            <span className="bg-linear-to-r from-[#D1701F] to-[#000000] bg-clip-text text-transparent">
+              try the code
             </span>
-            <span className="text-gray-300">·</span>
-            <span className="flex items-baseline gap-2">
-              <span className="font-mono font-bold text-gray-900 text-base tabular-nums">
-                <CountUp value="12K+" />
-              </span>
-              active users
-            </span>
-            <span className="text-gray-300">·</span>
-            <span className="flex items-baseline gap-2">
-              <span className="font-mono font-bold text-gray-900 text-base tabular-nums">
-                <CountUp value="4.9" />
-              </span>
-              avg. rating
-            </span>
-            <span className="text-gray-300">·</span>
-            <span className="flex items-baseline gap-2">
-              <span className="font-mono font-bold text-gray-900 text-base tabular-nums">
-                10+
-              </span>
-              years
-            </span>
-          </div>
+            .
+          </h2>
+          <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+            Small, working tools I built with React &amp; TypeScript. Each one
+            runs live in your browser &mdash; click around and see for yourself.
+          </p>
         </div>
 
-        {/* === Service filter tabs === */}
-        <div className="max-w-6xl mx-auto mb-10">
-          <div className="flex flex-wrap gap-2 md:gap-2.5 justify-center">
-            {SERVICES.map((s) => {
-              const count =
-                s.key === "all"
-                  ? ALL_PROJECTS.length
-                  : ALL_PROJECTS.filter((p) => p.service === s.key).length;
-              const isActive = activeService === s.key;
-              return (
-                <button
-                  key={s.key}
-                  onClick={() => setActiveService(s.key)}
-                  className={`group relative inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 border ${
-                    isActive
-                      ? "bg-gray-900 text-white border-gray-900 shadow-[0_8px_24px_rgba(0,0,0,0.18)] scale-[1.03]"
-                      : "bg-white text-gray-700 border-gray-200 hover:border-gray-400 hover:text-gray-900 hover:scale-[1.02]"
-                  }`}
-                >
-                  <span className="text-base leading-none">{s.icon}</span>
-                  <span className="tracking-tight">
-                    <span className="hidden md:inline">{s.label}</span>
-                    <span className="md:hidden">{s.short}</span>
-                  </span>
-                  <span
-                    className={`text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded-full transition-colors ${
-                      isActive
-                        ? "bg-white/20 text-white"
-                        : "bg-gray-100 text-gray-500 group-hover:bg-gray-200"
-                    }`}
-                  >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          {/* Active service description */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
-              Showing{" "}
-              <span className="font-semibold text-gray-900">
-                {filtered.length}
-              </span>{" "}
-              {filtered.length === 1 ? "project" : "projects"}
-              {activeService !== "all" && (
-                <>
-                  {" "}
-                  in{" "}
-                  <span className="font-semibold text-gray-900">
-                    {SERVICES.find((s) => s.key === activeService)?.label}
-                  </span>
-                </>
-              )}
-            </p>
-          </div>
-        </div>
-
-        {/* === Filtered projects grid === */}
-        <div className="max-w-6xl mx-auto">
-          <div
-            key={activeService}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 animate-fade-in"
+        {/* Tools grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto mb-16">
+          <ToolCard
+            number="01"
+            title="Color Palette Generator"
+            desc="Generates harmonious color palettes. Click any swatch to copy its hex."
+            tags={["React", "HSL", "Clipboard API"]}
           >
-            {filtered.map((p, i) => (
-              <CompactCard key={p.num} project={p} index={i} />
+            <ColorPaletteTool />
+          </ToolCard>
+
+          <ToolCard
+            number="02"
+            title="Text Analyzer"
+            desc="Live word, character, sentence count and reading-time estimator."
+            tags={["React", "useMemo", "Regex"]}
+          >
+            <TextAnalyzerTool />
+          </ToolCard>
+
+          <ToolCard
+            number="03"
+            title="Password Generator"
+            desc="Crypto-secure passwords with adjustable length and strength meter."
+            tags={["Web Crypto", "TypeScript", "UX"]}
+          >
+            <PasswordTool />
+          </ToolCard>
+        </div>
+
+        {/* Sub-header for blank canvas */}
+        <div className="max-w-2xl mx-auto text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 text-white text-[11px] font-semibold tracking-[0.2em] uppercase mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D1701F]" />
+            Selected Work
+          </div>
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight mb-3">
+            A blank canvas{" "}
+            <span className="bg-linear-to-r from-[#D1701F] to-[#000000] bg-clip-text text-transparent">
+              waiting for you
+            </span>
+            .
+          </h3>
+          <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+            I&apos;m at the start of my freelance journey &mdash; which means
+            you get my full focus, my best rates, and a developer who&apos;s
+            hungry to make your project shine.
+          </p>
+        </div>
+
+        {/* Hero blank-canvas card — client CTA */}
+        <div className="relative max-w-5xl mx-auto mb-20">
+          <div
+            aria-hidden
+            className="absolute -inset-1 rounded-3xl bg-linear-to-br from-[#D1701F]/30 via-transparent to-[#000000]/20 blur-2xl opacity-60"
+          />
+          <div className="relative bg-white border border-gray-200 rounded-3xl p-8 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden">
+            {/* Decorative grid */}
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-[0.04] pointer-events-none"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)",
+                backgroundSize: "32px 32px",
+              }}
+            />
+            {/* Decorative blob */}
+            <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-linear-to-br from-[#D1701F]/20 to-[#000000]/10 blur-3xl pointer-events-none" />
+
+            <div className="relative grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
+              {/* Visual side */}
+              <div className="lg:col-span-2 flex justify-center">
+                <BrowserMock />
+              </div>
+
+              {/* Copy side */}
+              <div className="lg:col-span-3">
+                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-gray-900 text-white text-[10px] font-bold tracking-[0.2em] uppercase mb-5">
+                  <span className="relative flex w-1.5 h-1.5">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-[#D1701F] opacity-75 animate-ping" />
+                    <span className="relative inline-flex rounded-full w-1.5 h-1.5 bg-[#D1701F]" />
+                  </span>
+                  Open for First Clients
+                </div>
+
+                <h4 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight mb-3 tracking-tight">
+                  Be the first project in my showcase.
+                </h4>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  I&apos;m starting fresh, with sharp skills, modern tools and
+                  the time to get your project right. Your launch could be the
+                  case-study at the top of this page &mdash; with full focus,
+                  founder-friendly pricing and direct communication.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a
+                    href="#contact"
+                    className="group relative overflow-hidden inline-flex items-center justify-center gap-2 bg-linear-to-br from-[#D1701F] to-[#000000] text-white font-semibold text-sm rounded-full px-6 py-3.5 shadow-[0_4px_14px_rgba(209,112,31,0.35)] hover:shadow-[0_8px_24px_rgba(209,112,31,0.5)] hover:scale-[1.02] transition-all duration-300"
+                  >
+                    <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                    <span className="relative z-10 flex items-center gap-2">
+                      Hire me for your project
+                      <svg
+                        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                  <a
+                    href="#services"
+                    className="inline-flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-900 font-semibold text-sm rounded-full px-6 py-3.5 hover:border-gray-900 hover:bg-gray-50 transition-all duration-300"
+                  >
+                    See what I offer
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Process strip */}
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+            <span className="text-[10px] font-semibold tracking-[0.25em] uppercase text-gray-500">
+              How we&apos;ll work together
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {PROCESS.map((p, i) => (
+              <div
+                key={p.step}
+                className="relative bg-white border border-gray-200 rounded-2xl p-5 hover:border-[#D1701F]/30 hover:shadow-[0_10px_30px_rgba(209,112,31,0.08)] hover:-translate-y-0.5 transition-all duration-300"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D1701F]">
+                    {p.step}
+                  </span>
+                  {i < PROCESS.length - 1 && (
+                    <svg
+                      className="w-4 h-4 text-gray-300 hidden lg:block"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  )}
+                </div>
+                <h4 className="text-base font-bold text-gray-900 mb-1.5 tracking-tight">
+                  {p.title}
+                </h4>
+                <p className="text-xs text-gray-500 leading-relaxed">
+                  {p.desc}
+                </p>
+              </div>
             ))}
           </div>
-
-          {filtered.length === 0 && (
-            <div className="py-20 text-center text-gray-500">
-              No projects yet in this category — check back soon.
-            </div>
-          )}
         </div>
 
-        <style jsx>{`
-          @keyframes fade-in {
-            from {
-              opacity: 0;
-              transform: translateY(8px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          :global(.animate-fade-in) {
-            animation: fade-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-          }
-        `}</style>
-
-        {/* Footer CTA */}
-        <div className="max-w-6xl mx-auto mt-16 flex flex-col md:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-300/60">
-          <p className="text-sm text-gray-600">
-            <span className="font-mono font-semibold text-gray-900">30+</span>{" "}
-            shipped products since 2014. Want to see the rest?
-          </p>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2.5 bg-gray-900 hover:bg-black text-white font-semibold text-sm rounded-full pl-5 pr-2 py-2 shadow-[0_4px_14px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] hover:scale-[1.03] transition-all duration-300"
-          >
-            Browse the archive
-            <span className="w-7 h-7 rounded-full bg-white flex items-center justify-center text-gray-900 group-hover:-rotate-45 transition-transform duration-300">
-              <svg
-                className="w-3.5 h-3.5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2.5}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-/* ====================================================================
-   COMPACT CARD — for OTHERS grid
-   ==================================================================== */
-function CompactCard({ project, index }: { project: Project; index: number }) {
-  void index;
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLAnchorElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [hovered, setHovered] = useState(false);
-  const serviceMeta =
-    SERVICES.find((s) => s.key === project.service) ?? SERVICES[0];
-
-  return (
-    <div ref={wrapRef} className="relative">
-      {/* Running border — bright segment travels around the card on hover */}
-      <div
-        aria-hidden
-        className={`absolute inset-[-2px] rounded-2xl pointer-events-none transition-opacity duration-300 overflow-hidden ${
-          hovered ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <div
-          className="absolute inset-[-50%]"
-          style={{
-            background:
-              "conic-gradient(from 0deg, transparent 0deg, transparent 260deg, #D1701F 310deg, #000000 350deg, transparent 360deg)",
-            animation: hovered ? "border-run 2.5s linear infinite" : undefined,
-          }}
-        />
-      </div>
-
-      <a
-        ref={cardRef}
-        href={project.href}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        className="group relative block bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(209,112,31,0.15)] transition-shadow duration-500"
-      >
-
-      {/* === Media area === */}
-      <div className="relative aspect-4/3 bg-gray-100 overflow-hidden">
-        {/* Image — always visible, parallax via JS transform */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          ref={imgRef}
-          src={project.media.src}
-          alt={project.title}
-          loading="lazy"
-          className={`absolute inset-0 w-full h-full object-cover ${
-            project.media.type === "video" && hovered ? "opacity-0" : "opacity-100"
-          }`}
-          style={{
-            transition:
-              "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s",
-            willChange: "transform",
-          }}
-        />
-
-        {/* Video — plays on hover, only when type=video and src provided */}
-        {project.media.type === "video" && project.media.videoSrc && (
-          <video
-            ref={(el) => {
-              videoRef.current = el;
-              if (!el) return;
-              if (hovered) el.play().catch(() => {});
-              else {
-                el.pause();
-                el.currentTime = 0;
-              }
-            }}
-            src={project.media.videoSrc}
-            poster={project.media.src}
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className={`absolute inset-0 w-full h-full object-cover ${
-              hovered ? "opacity-100" : "opacity-0"
-            }`}
-            style={{
-              transition:
-                "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s",
-              willChange: "transform",
-            }}
-          />
-        )}
-
-        {/* Subtle dark vignette at bottom for type contrast */}
-        <div
-          className={`absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent transition-opacity duration-500 ${
-            hovered ? "opacity-90" : "opacity-50"
-          }`}
-        />
-
-        {/* Indigo accent corner — animates in on hover */}
-        <div
-          aria-hidden
-          className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-linear-to-br from-[#D1701F] to-[#000000] blur-2xl transition-all duration-700 ${
-            hovered ? "opacity-70 scale-100" : "opacity-0 scale-75"
-          }`}
-        />
-
-        {/* Diagonal sheen sweep on hover */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            className={`absolute top-0 -left-1/2 w-1/2 h-full bg-linear-to-r from-transparent via-white/25 to-transparent skew-x-[-20deg] transition-transform duration-1000 ease-out ${
-              hovered ? "translate-x-[400%]" : "-translate-x-full"
-            }`}
-          />
-        </div>
-
-        {/* Media-type badge — top left (Video / Image) */}
-        <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-white text-[9px] font-semibold tracking-[0.15em] uppercase z-10">
-          {project.media.type === "video" ? (
-            <>
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-[#D1701F] opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D1701F]" />
-              </span>
-              Video
-            </>
-          ) : (
-            <>
-              <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Image
-            </>
-          )}
-        </div>
-
-        {/* Service badge — top right */}
-        <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/95 backdrop-blur-sm border border-white/60 text-[9px] font-semibold tracking-wider text-gray-700 z-10">
-          <span className="text-[10px] leading-none">{serviceMeta.icon}</span>
-          {serviceMeta.short}
-        </div>
-
-        {/* Title + description — overlaid at bottom */}
-        <div
-          className={`absolute bottom-0 left-0 right-0 p-5 md:p-6 text-white transition-all duration-500 z-10 ${
-            hovered ? "-translate-y-1" : "translate-y-0"
-          }`}
-        >
-          {/* Title with chromatic shadow on hover */}
-          <h3
-            className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-1.5"
-            style={{
-              textShadow: hovered
-                ? "2px 2px 0 rgba(0, 0, 0, 0.6), -2px -2px 0 rgba(6, 182, 212, 0.4), 0 2px 8px rgba(0,0,0,0.4)"
-                : "0 1px 3px rgba(0,0,0,0.4)",
-              transition: "text-shadow 0.5s",
-            }}
-          >
-            {project.title}
-          </h3>
-          <p
-            className={`text-sm text-white/90 leading-snug transition-all duration-500 overflow-hidden ${
-              hovered ? "max-h-24 opacity-100" : "max-h-10 opacity-90 line-clamp-2"
-            }`}
-          >
-            {project.description}
-          </p>
-
-          {/* Hover-only arrow */}
-          <div
-            className={`mt-3 inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-500 ${
-              hovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
-            }`}
-          >
-            View project
+        {/* Trust microcopy */}
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-gray-500">
+          <span className="inline-flex items-center gap-2">
             <svg
-              className="w-3.5 h-3.5"
+              className="w-4 h-4 text-[#D1701F]"
               fill="none"
               stroke="currentColor"
               strokeWidth={2.5}
@@ -763,66 +246,529 @@ function CompactCard({ project, index }: { project: Project; index: number }) {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M7 17L17 7M17 7H8M17 7v9"
+                d="M5 13l4 4L19 7"
               />
             </svg>
-          </div>
+            Founder-friendly pricing
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <svg
+              className="w-4 h-4 text-[#D1701F]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Fast turnarounds
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <svg
+              className="w-4 h-4 text-[#D1701F]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Direct communication
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <svg
+              className="w-4 h-4 text-[#D1701F]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Modern stack
+          </span>
         </div>
       </div>
-      </a>
+    </section>
+  );
+}
 
-      {/* Keyframe for running border */}
-      <style jsx>{`
-        @keyframes border-run {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style>
+/* ====================================================================
+   ToolCard wrapper
+   ==================================================================== */
+function ToolCard({
+  number,
+  title,
+  desc,
+  tags,
+  children,
+}: {
+  number: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="group relative bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(209,112,31,0.12)] hover:border-[#D1701F]/30 hover:-translate-y-1 transition-all duration-500 flex flex-col">
+      {/* Header */}
+      <div className="px-5 pt-5 pb-4 border-b border-gray-100">
+        <div className="flex items-start justify-between mb-2">
+          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D1701F]">
+            {number}
+          </span>
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[9px] font-bold text-emerald-700 tracking-wide uppercase">
+            <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+            Live
+          </span>
+        </div>
+        <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1 group-hover:text-[#D1701F] transition-colors">
+          {title}
+        </h3>
+        <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
+      </div>
+
+      {/* Tool */}
+      <div className="flex-1 p-5 bg-gray-50/50">{children}</div>
+
+      {/* Footer tags */}
+      <div className="px-5 py-3 border-t border-gray-100 flex flex-wrap gap-1.5">
+        {tags.map((tag) => (
+          <span
+            key={tag}
+            className="text-[10px] font-mono text-gray-500 px-1.5 py-0.5 rounded bg-gray-100"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
 
-/* ---------- Animated count-up number ---------- */
-function CountUp({ value }: { value: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState(value);
+/* ====================================================================
+   Tool 1: Color Palette Generator
+   ==================================================================== */
+function ColorPaletteTool() {
+  const [palette, setPalette] = useState<string[]>([
+    "#D1701F",
+    "#E89B5A",
+    "#F4C99A",
+    "#3D2914",
+    "#1A0F08",
+  ]);
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const generate = () => {
+    const baseHue = Math.floor(Math.random() * 360);
+    const saturation = 65 + Math.floor(Math.random() * 25);
+    const colors = [
+      hslToHex(baseHue, saturation, 50),
+      hslToHex(baseHue, saturation - 10, 65),
+      hslToHex(baseHue, saturation - 20, 78),
+      hslToHex((baseHue + 180) % 360, saturation - 30, 30),
+      hslToHex((baseHue + 180) % 360, saturation - 30, 15),
+    ];
+    setPalette(colors);
+    setCopied(null);
+  };
+
+  const copy = async (hex: string) => {
+    try {
+      await navigator.clipboard.writeText(hex);
+      setCopied(hex);
+      setTimeout(() => setCopied(null), 1200);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex rounded-xl overflow-hidden shadow-sm mb-4 h-28">
+        {palette.map((c, i) => (
+          <button
+            key={`${c}-${i}`}
+            onClick={() => copy(c)}
+            className="flex-1 relative group/sw transition-all hover:flex-[1.4] focus:flex-[1.4] outline-none"
+            style={{ backgroundColor: c }}
+            aria-label={`Copy ${c}`}
+          >
+            <span className="absolute inset-x-0 bottom-1.5 text-center text-[9px] font-mono font-bold text-white drop-shadow opacity-0 group-hover/sw:opacity-100 transition-opacity">
+              {copied === c ? "Copied!" : c.toUpperCase()}
+            </span>
+          </button>
+        ))}
+      </div>
+      <button
+        onClick={generate}
+        className="w-full bg-gray-900 hover:bg-[#D1701F] text-white text-xs font-semibold rounded-lg py-2.5 transition-colors flex items-center justify-center gap-2"
+      >
+        <svg
+          className="w-3.5 h-3.5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2.5}
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+          />
+        </svg>
+        Generate Palette
+      </button>
+    </div>
+  );
+}
+
+function hslToHex(h: number, s: number, l: number): string {
+  s /= 100;
+  l /= 100;
+  const k = (n: number) => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n: number) => {
+    const color = l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, "0");
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+/* ====================================================================
+   Tool 2: Text Analyzer
+   ==================================================================== */
+function TextAnalyzerTool() {
+  const [text, setText] = useState(
+    "Type or paste anything here to see live word, character and reading-time stats."
+  );
+
+  const stats = useMemo(() => {
+    const trimmed = text.trim();
+    const chars = text.length;
+    const words = trimmed ? trimmed.split(/\s+/).length : 0;
+    const sentences = trimmed
+      ? trimmed.split(/[.!?]+/).filter(Boolean).length
+      : 0;
+    const minutes = Math.max(1, Math.ceil(words / 200));
+    return { chars, words, sentences, minutes };
+  }, [text]);
+
+  return (
+    <div className="space-y-3">
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={4}
+        className="w-full text-xs font-mono px-3 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-[#D1701F] focus:ring-2 focus:ring-[#D1701F]/15 resize-none transition"
+      />
+      <div className="grid grid-cols-2 gap-2">
+        <Stat label="Words" value={stats.words} />
+        <Stat label="Characters" value={stats.chars} />
+        <Stat label="Sentences" value={stats.sentences} />
+        <Stat label="Read time" value={`${stats.minutes} min`} />
+      </div>
+    </div>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: number | string }) {
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg px-3 py-2">
+      <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-gray-500 mb-0.5">
+        {label}
+      </div>
+      <div className="text-base font-bold text-gray-900 tabular-nums">
+        {value}
+      </div>
+    </div>
+  );
+}
+
+/* ====================================================================
+   Tool 3: Password Generator
+   ==================================================================== */
+function PasswordTool() {
+  const [length, setLength] = useState(16);
+  const [opts, setOpts] = useState({ upper: true, nums: true, syms: true });
+  const [pwd, setPwd] = useState("");
+  const [copied, setCopied] = useState(false);
+  const generated = useRef(false);
+
+  const generate = useMemo(() => {
+    return () => {
+      const lower = "abcdefghijklmnopqrstuvwxyz";
+      const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const nums = "0123456789";
+      const syms = "!@#$%^&*-_=+";
+      let pool = lower;
+      if (opts.upper) pool += upper;
+      if (opts.nums) pool += nums;
+      if (opts.syms) pool += syms;
+
+      const arr = new Uint32Array(length);
+      if (typeof window !== "undefined" && window.crypto) {
+        window.crypto.getRandomValues(arr);
+      } else {
+        for (let i = 0; i < length; i++)
+          arr[i] = Math.floor(Math.random() * 0xffffffff);
+      }
+      let result = "";
+      for (let i = 0; i < length; i++) {
+        result += pool[arr[i] % pool.length];
+      }
+      setPwd(result);
+      setCopied(false);
+    };
+  }, [length, opts]);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    // Extract numeric portion, keep prefix/suffix (e.g., "$120K+", "12K+", "4.9", "30+")
-    const match = value.match(/^([^\d]*)([\d.]+)([^\d]*)$/);
-    if (!match) return;
-    const [, prefix, numStr, suffix] = match;
-    const target = parseFloat(numStr);
-    const isInt = !numStr.includes(".");
+    if (!generated.current) {
+      generated.current = true;
+      generate();
+    }
+  }, [generate]);
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          let start: number | null = null;
-          const dur = 1500;
-          const step = (ts: number) => {
-            if (start === null) start = ts;
-            const p = Math.min((ts - start) / dur, 1);
-            const eased = 1 - Math.pow(1 - p, 3);
-            const cur = target * eased;
-            setDisplay(`${prefix}${isInt ? Math.round(cur) : cur.toFixed(1)}${suffix}`);
-            if (p < 1) requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.4 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [value]);
+  const strength = useMemo(() => {
+    let score = 0;
+    if (length >= 12) score++;
+    if (length >= 16) score++;
+    if (opts.upper) score++;
+    if (opts.nums) score++;
+    if (opts.syms) score++;
+    return Math.min(score, 4);
+  }, [length, opts]);
 
-  return <span ref={ref}>{display}</span>;
+  const strengthLabel = ["Weak", "Fair", "Good", "Strong", "Excellent"][strength];
+  const strengthColor = [
+    "bg-red-400",
+    "bg-orange-400",
+    "bg-yellow-400",
+    "bg-emerald-400",
+    "bg-emerald-500",
+  ][strength];
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(pwd);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="relative bg-white border border-gray-200 rounded-lg px-3 py-2.5 font-mono text-xs break-all pr-10">
+        {pwd}
+        <button
+          onClick={copy}
+          aria-label="Copy password"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-md bg-gray-100 hover:bg-[#D1701F] hover:text-white text-gray-600 flex items-center justify-center transition-colors"
+        >
+          {copied ? (
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={3}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          ) : (
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      {/* Strength bar */}
+      <div>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[10px] font-semibold tracking-wide uppercase text-gray-500">
+            Strength
+          </span>
+          <span className="text-[10px] font-bold text-gray-700">
+            {strengthLabel}
+          </span>
+        </div>
+        <div className="flex gap-1">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className={`h-1 flex-1 rounded-full ${
+                i <= strength ? strengthColor : "bg-gray-200"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Length slider */}
+      <div>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[10px] font-semibold tracking-wide uppercase text-gray-500">
+            Length
+          </span>
+          <span className="text-[10px] font-bold text-gray-700 tabular-nums">
+            {length}
+          </span>
+        </div>
+        <input
+          type="range"
+          min={8}
+          max={32}
+          value={length}
+          onChange={(e) => setLength(Number(e.target.value))}
+          className="w-full accent-[#D1701F]"
+        />
+      </div>
+
+      {/* Toggles + regen */}
+      <div className="flex items-center gap-1.5 flex-wrap">
+        <Toggle
+          active={opts.upper}
+          onClick={() => setOpts((o) => ({ ...o, upper: !o.upper }))}
+        >
+          A-Z
+        </Toggle>
+        <Toggle
+          active={opts.nums}
+          onClick={() => setOpts((o) => ({ ...o, nums: !o.nums }))}
+        >
+          0-9
+        </Toggle>
+        <Toggle
+          active={opts.syms}
+          onClick={() => setOpts((o) => ({ ...o, syms: !o.syms }))}
+        >
+          !@#
+        </Toggle>
+        <button
+          onClick={generate}
+          className="ml-auto px-2.5 py-1 rounded-md bg-gray-900 hover:bg-[#D1701F] text-white text-[10px] font-bold transition-colors"
+        >
+          Regenerate
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function Toggle({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-2 py-1 rounded-md text-[10px] font-mono font-bold transition-colors ${
+        active
+          ? "bg-[#D1701F] text-white"
+          : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+/* ====================================================================
+   Decorative browser mock (used in blank-canvas hero)
+   ==================================================================== */
+function BrowserMock() {
+  return (
+    <div className="relative w-full max-w-sm">
+      <div className="bg-gray-900 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] overflow-hidden border border-gray-800">
+        {/* Top bar */}
+        <div className="flex items-center gap-1.5 px-3 py-2.5 bg-gray-950 border-b border-gray-800">
+          <span className="w-2.5 h-2.5 rounded-full bg-gray-700" />
+          <span className="w-2.5 h-2.5 rounded-full bg-gray-700" />
+          <span className="w-2.5 h-2.5 rounded-full bg-gray-700" />
+          <span className="ml-3 px-2.5 py-0.5 rounded text-[9px] font-mono text-gray-500 bg-gray-800/60 truncate">
+            yourproject.com
+          </span>
+        </div>
+        {/* Content */}
+        <div className="aspect-4/3 bg-linear-to-br from-gray-900 to-gray-950 p-5 flex flex-col items-center justify-center">
+          {/* Plus icon */}
+          <div className="relative mb-4">
+            <div className="absolute inset-0 bg-[#D1701F] blur-2xl opacity-40" />
+            <div className="relative w-14 h-14 rounded-2xl bg-linear-to-br from-[#D1701F] to-[#000000] flex items-center justify-center shadow-[0_8px_24px_rgba(209,112,31,0.4)]">
+              <svg
+                className="w-7 h-7 text-white"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+            </div>
+          </div>
+          <div className="space-y-2 w-full">
+            <div className="h-2 rounded-full bg-gray-800 w-3/4 mx-auto" />
+            <div className="h-2 rounded-full bg-gray-800 w-1/2 mx-auto" />
+            <div className="h-2 rounded-full bg-[#D1701F]/40 w-2/3 mx-auto" />
+          </div>
+          <div className="mt-5 px-3 py-1.5 rounded-full bg-[#D1701F] text-white text-[10px] font-bold">
+            Your Project Here
+          </div>
+        </div>
+      </div>
+      {/* Floating sparkle */}
+      <div
+        aria-hidden
+        className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center"
+      >
+        <svg
+          className="w-4 h-4 text-[#D1701F]"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z" />
+        </svg>
+      </div>
+    </div>
+  );
 }
