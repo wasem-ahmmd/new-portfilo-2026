@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -189,7 +189,7 @@ export default function Hero() {
               style={{ animationDelay: "0.55s" }}
             >
               <a
-                href="/wasim-ahmed-cv.pdf"
+                href="/my-resume/Waseem_Ahmed_Resume.pdf"
                 download
                 className="group inline-flex items-center gap-2.5 bg-gray-900 hover:bg-black text-white font-semibold text-sm px-6 h-12 rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.25)] hover:scale-[1.03] transition-all duration-300"
               >

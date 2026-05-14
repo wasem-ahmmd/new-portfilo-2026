@@ -114,7 +114,7 @@ export default function About() {
 
             {/* Download CV button */}
             <a
-              href="/cv.pdf"
+              href="/my-resume/Waseem_Ahmed_Resume.pdf"
               download
               className="group/cv mt-auto inline-flex items-center justify-center gap-2.5 bg-linear-to-br from-[#D1701F] to-[#000000] text-white font-semibold text-sm rounded-full px-6 py-3 shadow-[0_4px_14px_rgba(209,112,31,0.35)] hover:shadow-[0_8px_24px_rgba(209,112,31,0.5)] hover:scale-[1.02] transition-all duration-300"
             >

@@ -1,3 +1,5 @@
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function Footer() {
   return (
     <footer className="bg-gray-950 text-white py-16 md:py-20 border-t border-gray-900">
@@ -126,7 +128,7 @@ export default function Footer() {
           {/* Bottom bar */}
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Wasim Ahmed. All rights reserved.
+              © <span suppressHydrationWarning>{CURRENT_YEAR}</span> Wasim Ahmed. All rights reserved.
             </p>
             <p className="text-gray-600 text-xs">
               Built with Next.js, TypeScript & TailwindCSS
